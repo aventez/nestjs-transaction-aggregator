@@ -1,0 +1,12 @@
+{
+    "typescript.preferences.quoteStyle": "single",
+    "editor.codeActionsOnSave": [
+      "source.organizeImports",
+      "source.fixAll.eslint",
+      "source.sortMembers",
+    ],
+    "eslint.validate": [
+      "javascript"
+    ]
+  }
+  
