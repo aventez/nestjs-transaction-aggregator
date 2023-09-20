@@ -1,4 +1,4 @@
-type TransactionType = "DEBIT" | "CREDIT";
+type TransactionType = 'DEBIT' | 'CREDIT';
 
 export interface UnifiedTransaction {
   id: string;

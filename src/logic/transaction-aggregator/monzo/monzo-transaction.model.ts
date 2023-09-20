@@ -1,4 +1,4 @@
-interface MonzoTransaction {
+export interface MonzoTransaction {
   id: string;
   created: string;
   description: string;

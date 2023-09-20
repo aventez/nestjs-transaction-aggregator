@@ -1,10 +1,10 @@
-import { HttpService } from "@nestjs/axios";
-import { HttpException, Inject } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
-import { AxiosError } from "axios";
-import { catchError, firstValueFrom } from "rxjs";
-import { TransactionFetchingFailedException } from "src/exception/transaction-fetching-failed.exception";
-import { UnifiedTransaction } from "src/models/transaction/unified-transaction.model";
+import { HttpService } from '@nestjs/axios';
+import { HttpException, Inject } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { AxiosError } from 'axios';
+import { catchError, firstValueFrom } from 'rxjs';
+import { TransactionFetchingFailedException } from '../../exception/transaction-fetching-failed.exception';
+import { UnifiedTransaction } from '../../models/transaction/unified-transaction.model';
 
 export abstract class RequestService {
   constructor(
@@ -12,7 +12,7 @@ export abstract class RequestService {
     protected readonly configService: ConfigService,
 
     @Inject(HttpService)
-    protected readonly httpService: HttpService
+    protected readonly httpService: HttpService,
   ) {}
 
   protected async sendRequest<T>(apiUrl: string): Promise<T> {
@@ -21,8 +21,8 @@ export abstract class RequestService {
         this.httpService.get(apiUrl).pipe(
           catchError((error: AxiosError) => {
             throw new TransactionFetchingFailedException(error.message);
-          })
-        )
+          }),
+        ),
       );
 
       if (status !== 200) {
@@ -38,7 +38,7 @@ export abstract class RequestService {
         throw error;
       } else {
         throw new TransactionFetchingFailedException(
-          "An unexpected error occurred"
+          'An unexpected error occurred',
         );
       }
     }
@@ -46,7 +46,7 @@ export abstract class RequestService {
 
   protected validateResponse(data: any): void {
     if (!Array.isArray(data)) {
-      throw new TransactionFetchingFailedException("Invalid response format");
+      throw new TransactionFetchingFailedException('Invalid response format');
     }
   }
 

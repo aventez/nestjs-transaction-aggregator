@@ -1,16 +1,16 @@
-import { Injectable } from "@nestjs/common";
-import { UnifiedTransaction } from "src/models/transaction/unified-transaction.model";
-import { BankName } from "src/rest/transactions/query/get-transactions-list.query";
-import { MonzoApiService } from "./monzo/monzo-api.service";
-import { RevolutApiService } from "./revolut/revolut-api.service";
-import { SterlingBankApiService } from "./sterlingbank/sterlingbank-api.service";
+import { Injectable } from '@nestjs/common';
+import { BankName } from '../../api/transactions/dto/get-transactions-list.dto';
+import { UnifiedTransaction } from '../../models/transaction/unified-transaction.model';
+import { MonzoApiService } from './monzo/monzo-api.service';
+import { RevolutApiService } from './revolut/revolut-api.service';
+import { SterlingBankApiService } from './sterlingbank/sterlingbank-api.service';
 
 @Injectable()
-export class BankApiService {
+export class TransactionAggregatorService {
   constructor(
     private readonly revolutApiService: RevolutApiService,
     private readonly monzoApiService: MonzoApiService,
-    private readonly sterlingBankApiService: SterlingBankApiService
+    private readonly sterlingBankApiService: SterlingBankApiService,
   ) {}
 
   private readonly servicesMap = new Map<string, any>([
@@ -19,7 +19,7 @@ export class BankApiService {
     [BankName.STERLINGBANK, this.sterlingBankApiService],
   ]);
 
-  async getTransactions(bankName?: string): Promise<UnifiedTransaction[]> {
+  async fetchTransactions(bankName?: string): Promise<UnifiedTransaction[]> {
     const service = this.servicesMap.get(bankName);
     if (service) {
       return await service.fetchTransactions();

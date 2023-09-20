@@ -1,10 +1,10 @@
-import { Module } from "@nestjs/common";
-import { ConfigModule } from "@nestjs/config";
-import bankApisConfiguration from "./config/bank-apis.config";
-import serverConfiguration from "./config/server.config";
-import { MockedApisModule } from "./mocked-apis/mocked-apis.module";
-import { RestTransactionModule } from "./rest/transactions/rest-transaction.module";
-import configValidator from "./validators/config";
+import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
+import { RestMockedApisModule } from './api/mocked-apis/rest-mocked-apis.module';
+import { RestTransactionModule } from './api/transactions/rest-transaction.module';
+import bankApisConfiguration from './config/bank-apis.config';
+import serverConfiguration from './config/server.config';
+import configValidator from './validators/config';
 
 @Module({
   imports: [
@@ -16,8 +16,8 @@ import configValidator from "./validators/config";
       load: [serverConfiguration, bankApisConfiguration],
       isGlobal: true,
     }),
-    MockedApisModule,
     RestTransactionModule,
+    RestMockedApisModule.registerIfNotProd(),
   ],
 })
 export class AppModule {}

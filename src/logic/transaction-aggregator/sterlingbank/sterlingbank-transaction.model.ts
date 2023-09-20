@@ -1,4 +1,4 @@
-interface SterlingBankTransaction {
+export interface SterlingBankTransaction {
   id: string;
   currency: string;
   amount: number;

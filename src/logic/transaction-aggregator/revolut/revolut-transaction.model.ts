@@ -1,4 +1,4 @@
-interface RevolutTransaction {
+export interface RevolutTransaction {
   id: string;
   created_at: string;
   completed_at: string;
